@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Client Onboarding Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+        .high { color: red; font-weight: bold; }
+        .medium { color: orange; font-weight: bold; }
+        .low { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>AI Client Onboarding Assistant</h2>
+    <p>Automated risk analysis for financial client onboarding workflows.</p>
+
+    <form method="POST">
+        <textarea name="client_data" rows="8" placeholder="Enter client details here..."></textarea>
+        <button type="submit">Analyze Client</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+        <h3>Risk Level:
+            <span class="
+                {% if result.risk_level == 'High Risk' %}high
+                {% elif result.risk_level == 'Medium Risk' %}medium
+                {% else %}low
+                {% endif %}
+            ">
+            {{ result.risk_level }}
+            </span>
+        </h3>
+
+        <h4>Missing Fields:</h4>
+        <ul>
+            {% for field in result.missing_fields %}
+                <li>{{ field }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Suggestion:</h4>
+        <p>{{ result.suggestion }}</p>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
